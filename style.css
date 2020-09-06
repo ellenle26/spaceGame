@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  background-color: black;
+  font-family: "Do Hyeon", sans-serif;
+  font-size: 20px;
+}
+
+button:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+img {
+  width: 30px;
+}
+
+.container {
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.infoBoad {
+  height: 100%;
+  width: 45%;
+  color: rgb(207, 135, 135);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+ion-icon {
+  color: rgb(196, 196, 196);
+}
+
+.instructions {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.direction {
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashBoard {
+  font-size: 40px;
+}
+
+button {
+  font-family: "Do Hyeon", sans-serif;
+  height: 40px;
+  font-size: 15px;
+  border-radius: 25%;
+  background-color: rgb(196, 196, 196);
+}
+
+#gameBoard {
+  border: none;
+  background-color: black;
+}
