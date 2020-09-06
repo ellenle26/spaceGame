@@ -15,55 +15,90 @@
       <div class="infoBoad">
         <h1>GROUND CONTROL</h1>
         <p>----------</p>
-        <div>Asteroids has been considered to be a new source of energy for Earth. <br>
-            As an astronaut, you need to gather as many as possible. <br>
-            You might found some aliens on the way. Don't be fooled by their adorabe looking. <br>
-            Stay away from them. And, ooh, stay away from our satellites too *^^* <br><br>
-            GOOD LUCK! LET THE FORCE BE WITH YOU <ion-icon name="planet-outline" size="large"></ion-icon>
+        <div>
+          Asteroids has been considered to be a new source of energy for Earth.
+          <br />
+          As an astronaut, you need to gather as many as possible. <br />
+          You might found some aliens on the way. Don't be fooled by their
+          adorabe looking. <br />
+          Stay away from them. And, ooh, stay away from our satellites too *^^*
+          <br /><br />
+          GOOD LUCK! LET THE FORCE BE WITH YOU
+          <ion-icon name="planet-outline" size="large"></ion-icon>
         </div>
         <p>----------</p>
         <div class="instructions">
-            <div>
-      <div class="direction">
-          <ion-icon name="arrow-back-circle-outline" size="large">
-          </ion-icon> move left </div>
-      <div class="direction">
-          <ion-icon name="arrow-forward-circle-outline" size="large">
-          </ion-icon> move right </div> </div>
-          <div>Avoid : <br> 
-              <img src="images/alien1.png"/>
-              <img src="images/alien2.png"/>
-              <img src="images/alien3.png"/>
-              <img src="images/alien4.png"/> <br>
-              <img src="images/satellite1.png"/>
-              <img src="images/satellite2.png"/>
-              <img src="images/satellite3.png"/>
-              <img src="images/satellite4.png"/>
+          <div>
+            <div class="direction">
+              <ion-icon name="arrow-up-circle-outline" size="large"> </ion-icon>
+              move up
             </div>
-            <div>Collect : <br>
-                <img src="images/meteor1.png"/>
-                <img src="images/meteor2.png"/>
-                <img src="images/meteor3.png"/>
-                <img src="images/meteor4.png"/>
-              </div>
-        </div><br>
-        <div class ="dashBoard">SCORE : <span id="score"></span></div>
-        <div class ="dashBoard">TIME : <span id="time"></span></div> <br>
+            <div class="direction">
+              <ion-icon name="arrow-down-circle-outline" size="large">
+              </ion-icon>
+              move down
+            </div>
+          </div>
+          <div>
+          <div class="direction">
+            <ion-icon name="arrow-back-circle-outline" size="large"> </ion-icon>
+            move left
+          </div>
+          <div class="direction">
+            <ion-icon name="arrow-forward-circle-outline" size="large">
+            </ion-icon>
+            move right
+          </div>
+        </div>
         <div>
+          Avoid : <br />
+          <img src="images/alien1.png" />
+          <img src="images/alien2.png" />
+          <img src="images/alien3.png" />
+          <img src="images/alien4.png" /> <br />
+          <img src="images/satellite1.png" />
+          <img src="images/satellite2.png" />
+          <img src="images/satellite3.png" />
+          <img src="images/satellite4.png" />
+        </div>
+        <div>
+          Collect : <br />
+          <img src="images/meteor1.png" />
+          <img src="images/meteor2.png" />
+          <img src="images/meteor3.png" />
+          <img src="images/meteor4.png" />
+        </div>
+      </div>
+      <br />
+      <div class="dashBoard">SCORE : <span id="score"></span></div>
+      <div class="dashBoard">TIME : <span id="time"></span></div>
+      <br />
+      <div>
         <button id="start" onclick="startGame()">START</button>
         <button id="reset" onclick="resetGame()" disabled>RESET</button>
-        </div>
-        <br>
-        <div>
-            <ion-icon name="musical-notes-outline" size="large" onclick="play()"></ion-icon>
-            <ion-icon name="volume-mute-outline" size="large" onclick="pause()"></ion-icon>
-            <audio id="bgMusic">
-                <source src="sound/bg.mp3" type="audio/mp3">
-              </audio>
-        </div>
+      </div>
+      <br />
+      <div>
+        <ion-icon
+          name="musical-notes-outline"
+          size="large"
+          onclick="play()"
+        ></ion-icon>
+        <ion-icon
+          name="volume-mute-outline"
+          size="large"
+          onclick="pause()"
+        ></ion-icon>
+        <audio id="bgMusic">
+          <source src="sound/bg.mp3" type="audio/mp3" />
+        </audio>
+      </div>
     </div>
-      <canvas id="gameBoard"></canvas>
-    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <canvas id="gameBoard"></canvas>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"
+    ></script>
     <script src="myscript.js"></script>
   </body>
 </html>
