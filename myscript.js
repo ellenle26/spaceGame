@@ -8,9 +8,13 @@
 Here, we create and add our "canvas" to the page.
 We also load all of our images. 
 */
-
+let loop;
+let gameEnded = false;
 let canvas;
 let ctx;
+let time = 60;
+document.getElementById("time").innerHTML = time;
+let finished = false;
 
 canvas = document.getElementById("gameBoard");
 ctx = canvas.getContext("2d");
@@ -19,6 +23,7 @@ canvas.height = 800;
 
 let bgReady,
   shipReady,
+  shieldReady = false,
   metReady,
   aliReady,
   satReady,
@@ -33,6 +38,7 @@ let bgReady,
   sat4Ready;
 let bgImage,
   shipImage,
+  shieldImage,
   metImage,
   aliImage,
   satImage,
@@ -67,6 +73,14 @@ function loadImages() {
     bg3Ready = true;
   };
   bg3Image.src = "images/background3.jpg";
+
+  // show shield
+  shieldImage = new Image();
+  shieldImage.onload = function () {
+    // show the background image
+    // shieldReady = true;
+  };
+  shieldImage.src = "images/shield.png";
 
   // show the ship image
   shipImage = new Image();
@@ -170,7 +184,7 @@ function loadImages() {
     // show the satellite4 image
     sat4Ready = true;
   };
-  sat3Image.src = "images/satellite4.png";
+  sat4Image.src = "images/satellite4.png";
 }
 
 let score = 0;
@@ -272,6 +286,10 @@ let update = function () {
     // Player is holding right key
     shipX += 5;
   }
+  if (83 in keysDown) {
+    // Player is holding right key
+    shieldReady = true;
+  } else shieldReady = false;
 
   metY += 1;
   aliY += 2;
@@ -301,6 +319,7 @@ let update = function () {
   // are about 32 pixels big.
   //   if obstacle meet canvas limit:
   //   top to bttm
+
   if (metY == canvas.height) {
     metX = Math.floor(Math.random() * (canvas.width - 50));
     metY = -50;
@@ -426,240 +445,365 @@ let update = function () {
 
   //   if ship collide object
   //   alien 1
-  if (
-    shipX <= aliX + 50 &&
-    shipX + 50 >= aliX &&
-    shipY <= aliY + 50 &&
-    shipY + 50 >= aliY
-  ) {
-    finished = true;
-    time = 0;
-    // hide monster and hero
-    metReady = false;
-    aliReady = false;
-    satReady = false;
-    met2Ready = false;
-    ali2Ready = false;
-    sat2Ready = false;
-    met3Ready = false;
-    ali3Ready = false;
-    sat3Ready = false;
-    met4Ready = false;
-    ali4Ready = false;
-    sat4Ready = false;
-    shipReady = false;
-    // move hero out of canvas
-    shipX = -600;
-    shipY = -600;
-    document.getElementById("loseSound").play();
-    pause();
+  if (shieldReady) {
+    // top to bttm :ali1
+    if (
+      shipX - 5 <= aliX + 50 &&
+      shipX - 5 + 60 >= aliX &&
+      shipY - 5 <= aliY + 50 &&
+      shipY - 5 + 60 >= aliY
+    ) {
+      aliX = Math.floor(Math.random() * (canvas.width - 50));
+      aliY = -50;
+    }
+    // left to right: ali2
+    if (
+      shipX - 5 <= ali2X + 50 &&
+      shipX - 5 + 60 >= ali2X &&
+      shipY - 5 <= ali2Y + 50 &&
+      shipY - 5 + 60 >= ali2Y
+    ) {
+      ali2Y = Math.floor(Math.random() * (canvas.height - 50));
+      ali2X = -50;
+    }
+    // right to left: ali3
+    if (
+      shipX - 5 <= ali3X + 50 &&
+      shipX - 5 + 60 >= ali3X &&
+      shipY - 5 <= ali3Y + 50 &&
+      shipY - 5 + 60 >= ali3Y
+    ) {
+      ali3Y = Math.floor(Math.random() * (canvas.height - 50));
+      ali3X = 50 + canvas.width;
+    }
+    // bttm to top: ali4
+    if (
+      shipX - 5 <= ali4X + 50 &&
+      shipX - 5 + 60 >= ali4X &&
+      shipY - 5 <= ali4Y + 50 &&
+      shipY - 5 + 60 >= ali4Y
+    ) {
+      ali4X = Math.floor(Math.random() * (canvas.width - 50));
+      ali4Y = 50 + canvas.height;
+    }
+    // top to bttm :sat1
+    if (
+      shipX - 5 <= satX + 50 &&
+      shipX - 5 + 60 >= satX &&
+      shipY - 5 <= satY + 50 &&
+      shipY - 5 + 60 >= satY
+    ) {
+      satX = Math.floor(Math.random() * (canvas.width - 50));
+      satY = -50;
+    }
+    // left to right: sat2
+    if (
+      shipX - 5 <= sat2X + 50 &&
+      shipX - 5 + 60 >= sat2X &&
+      shipY - 5 <= sat2Y + 50 &&
+      shipY - 5 + 60 >= sat2Y
+    ) {
+      sat2Y = Math.floor(Math.random() * (canvas.height - 50));
+      sat2X = -50;
+    }
+    // right to left: sat3
+    if (
+      shipX - 5 <= sat3X + 50 &&
+      shipX - 5 + 60 >= sat3X &&
+      shipY - 5 <= sat3Y + 50 &&
+      shipY - 5 + 60 >= sat3Y
+    ) {
+      sat3Y = Math.floor(Math.random() * (canvas.height - 50));
+      sat3X = 50 + canvas.width;
+    }
+    // bttm to top: sat4
+    if (
+      shipX - 5 <= sat4X + 50 &&
+      shipX - 5 + 60 >= sat4X &&
+      shipY - 5 <= sat4Y + 50 &&
+      shipY - 5 + 60 >= sat4Y
+    ) {
+      sat4X = Math.floor(Math.random() * (canvas.width - 50));
+      sat4Y = 50 + canvas.height;
+    }
+    // top to bttm :met1
+    if (
+      shipX - 5 <= metX + 50 &&
+      shipX - 5 + 60 >= metX &&
+      shipY - 5 <= metY + 50 &&
+      shipY - 5 + 60 >= metY
+    ) {
+      metX = Math.floor(Math.random() * (canvas.width - 50));
+      metY = -50;
+    }
+    // left to right: met2
+    if (
+      shipX - 5 <= met2X + 50 &&
+      shipX - 5 + 60 >= met2X &&
+      shipY - 5 <= met2Y + 50 &&
+      shipY - 5 + 60 >= met2Y
+    ) {
+      met2Y = Math.floor(Math.random() * (canvas.height - 50));
+      met2X = -50;
+    }
+    // right to left: met3
+    if (
+      shipX - 5 <= met3X + 50 &&
+      shipX - 5 + 60 >= met3X &&
+      shipY - 5 <= met3Y + 50 &&
+      shipY - 5 + 60 >= met3Y
+    ) {
+      met3Y = Math.floor(Math.random() * (canvas.height - 50));
+      met3X = 50 + canvas.width;
+    }
+    // bttm to top: met4
+    if (
+      shipX - 5 <= met4X + 50 &&
+      shipX - 5 + 60 >= met4X &&
+      shipY - 5 <= met4Y + 50 &&
+      shipY - 5 + 60 >= met4Y
+    ) {
+      met4X = Math.floor(Math.random() * (canvas.width - 50));
+      met4Y = 50 + canvas.height;
+    }
+  } else {
+    if (
+      shipX <= aliX + 50 &&
+      shipX + 50 >= aliX &&
+      shipY <= aliY + 50 &&
+      shipY + 50 >= aliY
+    ) {
+      finished = true;
+      time = 0;
+      // hide monster and hero
+      metReady = false;
+      aliReady = false;
+      satReady = false;
+      met2Ready = false;
+      ali2Ready = false;
+      sat2Ready = false;
+      met3Ready = false;
+      ali3Ready = false;
+      sat3Ready = false;
+      met4Ready = false;
+      ali4Ready = false;
+      sat4Ready = false;
+      shipReady = false;
+      // move hero out of canvas
+      shipX = -600;
+      shipY = -600;
+      document.getElementById("loseSound").play();
+      pause();
+    }
+    //   alien 2
+    if (
+      shipX <= ali2X + 50 &&
+      shipX + 50 >= ali2X &&
+      shipY <= ali2Y + 50 &&
+      shipY + 50 >= ali2Y
+    ) {
+      finished = true;
+      time = 0;
+      // hide monster and hero
+      metReady = false;
+      aliReady = false;
+      satReady = false;
+      met2Ready = false;
+      ali2Ready = false;
+      sat2Ready = false;
+      met3Ready = false;
+      ali3Ready = false;
+      sat3Ready = false;
+      met4Ready = false;
+      ali4Ready = false;
+      sat4Ready = false;
+      shipReady = false;
+      // move hero out of canvas
+      shipX = -600;
+      shipY = -600;
+      document.getElementById("loseSound").play();
+      pause();
+    }
+    //   alien 3
+    if (
+      shipX <= ali3X + 50 &&
+      shipX + 50 >= ali3X &&
+      shipY <= ali3Y + 50 &&
+      shipY + 50 >= ali3Y
+    ) {
+      finished = true;
+      time = 0;
+      // hide monster and hero
+      metReady = false;
+      aliReady = false;
+      satReady = false;
+      met2Ready = false;
+      ali2Ready = false;
+      sat2Ready = false;
+      met3Ready = false;
+      ali3Ready = false;
+      sat3Ready = false;
+      met4Ready = false;
+      ali4Ready = false;
+      sat4Ready = false;
+      shipReady = false;
+      // move hero out of canvas
+      shipX = -600;
+      shipY = -600;
+      document.getElementById("loseSound").play();
+      pause();
+    }
+    //   alien 4
+    if (
+      shipX <= ali4X + 50 &&
+      shipX + 50 >= ali4X &&
+      shipY <= ali4Y + 50 &&
+      shipY + 50 >= ali4Y
+    ) {
+      finished = true;
+      time = 0;
+      // hide monster and hero
+      metReady = false;
+      aliReady = false;
+      satReady = false;
+      met2Ready = false;
+      ali2Ready = false;
+      sat2Ready = false;
+      met3Ready = false;
+      ali3Ready = false;
+      sat3Ready = false;
+      met4Ready = false;
+      ali4Ready = false;
+      sat4Ready = false;
+      shipReady = false;
+      // move hero out of canvas
+      shipX = -600;
+      shipY = -600;
+      document.getElementById("loseSound").play();
+      pause();
+    }
+    //   satellite 1
+    if (
+      shipX <= satX + 50 &&
+      shipX + 50 >= satX &&
+      shipY <= satY + 50 &&
+      shipY + 50 >= satY
+    ) {
+      finished = true;
+      time = 0;
+      // hide monster and hero
+      metReady = false;
+      aliReady = false;
+      satReady = false;
+      met2Ready = false;
+      ali2Ready = false;
+      sat2Ready = false;
+      met3Ready = false;
+      ali3Ready = false;
+      sat3Ready = false;
+      met4Ready = false;
+      ali4Ready = false;
+      sat4Ready = false;
+      shipReady = false;
+      // move hero out of canvas
+      shipX = -600;
+      shipY = -600;
+      document.getElementById("loseSound").play();
+      pause();
+    }
+    //   satellite 2
+    if (
+      shipX <= sat2X + 50 &&
+      shipX + 50 >= sat2X &&
+      shipY <= sat2Y + 50 &&
+      shipY + 50 >= sat2Y
+    ) {
+      finished = true;
+      time = 0;
+      // hide monster and hero
+      metReady = false;
+      aliReady = false;
+      satReady = false;
+      met2Ready = false;
+      ali2Ready = false;
+      sat2Ready = false;
+      met3Ready = false;
+      ali3Ready = false;
+      sat3Ready = false;
+      met4Ready = false;
+      ali4Ready = false;
+      sat4Ready = false;
+      shipReady = false;
+      // move hero out of canvas
+      shipX = -600;
+      shipY = -600;
+      document.getElementById("loseSound").play();
+      pause();
+    }
+    //   satellite 3
+    if (
+      shipX <= sat3X + 50 &&
+      shipX + 50 >= sat3X &&
+      shipY <= sat3Y + 50 &&
+      shipY + 50 >= sat3Y
+    ) {
+      finished = true;
+      time = 0;
+      // hide monster and hero
+      metReady = false;
+      aliReady = false;
+      satReady = false;
+      met2Ready = false;
+      ali2Ready = false;
+      sat2Ready = false;
+      met3Ready = false;
+      ali3Ready = false;
+      sat3Ready = false;
+      met4Ready = false;
+      ali4Ready = false;
+      sat4Ready = false;
+      shipReady = false;
+      // move hero out of canvas
+      shipX = -600;
+      shipY = -600;
+      document.getElementById("loseSound").play();
+      pause();
+    }
+    //   satellite 4
+    if (
+      shipX <= sat4X + 50 &&
+      shipX + 50 >= sat4X &&
+      shipY <= sat4Y + 50 &&
+      shipY + 50 >= sat4Y
+    ) {
+      finished = true;
+      time = 0;
+      // hide monster and hero
+      metReady = false;
+      aliReady = false;
+      satReady = false;
+      met2Ready = false;
+      ali2Ready = false;
+      sat2Ready = false;
+      met3Ready = false;
+      ali3Ready = false;
+      sat3Ready = false;
+      met4Ready = false;
+      ali4Ready = false;
+      sat4Ready = false;
+      shipReady = false;
+      // move hero out of canvas
+      shipX = -600;
+      shipY = -600;
+      document.getElementById("loseSound").play();
+      pause();
+    }
   }
-  //   alien 2
-  if (
-    shipX <= ali2X + 50 &&
-    shipX + 50 >= ali2X &&
-    shipY <= ali2Y + 50 &&
-    shipY + 50 >= ali2Y
-  ) {
-    finished = true;
-    time = 0;
-    // hide monster and hero
-    metReady = false;
-    aliReady = false;
-    satReady = false;
-    met2Ready = false;
-    ali2Ready = false;
-    sat2Ready = false;
-    met3Ready = false;
-    ali3Ready = false;
-    sat3Ready = false;
-    met4Ready = false;
-    ali4Ready = false;
-    sat4Ready = false;
-    shipReady = false;
-    // move hero out of canvas
-    shipX = -600;
-    shipY = -600;
-    document.getElementById("loseSound").play();
-    pause();
-  }
-  //   alien 3
-  if (
-    shipX <= ali3X + 50 &&
-    shipX + 50 >= ali3X &&
-    shipY <= ali3Y + 50 &&
-    shipY + 50 >= ali3Y
-  ) {
-    finished = true;
-    time = 0;
-    // hide monster and hero
-    metReady = false;
-    aliReady = false;
-    satReady = false;
-    met2Ready = false;
-    ali2Ready = false;
-    sat2Ready = false;
-    met3Ready = false;
-    ali3Ready = false;
-    sat3Ready = false;
-    met4Ready = false;
-    ali4Ready = false;
-    sat4Ready = false;
-    shipReady = false;
-    // move hero out of canvas
-    shipX = -600;
-    shipY = -600;
-    document.getElementById("loseSound").play();
-    pause();
-  }
-  //   alien 4
-  if (
-    shipX <= ali4X + 50 &&
-    shipX + 50 >= ali4X &&
-    shipY <= ali4Y + 50 &&
-    shipY + 50 >= ali4Y
-  ) {
-    finished = true;
-    time = 0;
-    // hide monster and hero
-    metReady = false;
-    aliReady = false;
-    satReady = false;
-    met2Ready = false;
-    ali2Ready = false;
-    sat2Ready = false;
-    met3Ready = false;
-    ali3Ready = false;
-    sat3Ready = false;
-    met4Ready = false;
-    ali4Ready = false;
-    sat4Ready = false;
-    shipReady = false;
-    // move hero out of canvas
-    shipX = -600;
-    shipY = -600;
-    document.getElementById("loseSound").play();
-    pause();
-  }
-  //   satellite 1
-  if (
-    shipX <= satX + 50 &&
-    shipX + 50 >= satX &&
-    shipY <= satY + 50 &&
-    shipY + 50 >= satY
-  ) {
-    finished = true;
-    time = 0;
-    // hide monster and hero
-    metReady = false;
-    aliReady = false;
-    satReady = false;
-    met2Ready = false;
-    ali2Ready = false;
-    sat2Ready = false;
-    met3Ready = false;
-    ali3Ready = false;
-    sat3Ready = false;
-    met4Ready = false;
-    ali4Ready = false;
-    sat4Ready = false;
-    shipReady = false;
-    // move hero out of canvas
-    shipX = -600;
-    shipY = -600;
-    document.getElementById("loseSound").play();
-    pause();
-  }
-  //   satellite 2
-  if (
-    shipX <= sat2X + 50 &&
-    shipX + 50 >= sat2X &&
-    shipY <= sat2Y + 50 &&
-    shipY + 50 >= sat2Y
-  ) {
-    finished = true;
-    time = 0;
-    // hide monster and hero
-    metReady = false;
-    aliReady = false;
-    satReady = false;
-    met2Ready = false;
-    ali2Ready = false;
-    sat2Ready = false;
-    met3Ready = false;
-    ali3Ready = false;
-    sat3Ready = false;
-    met4Ready = false;
-    ali4Ready = false;
-    sat4Ready = false;
-    shipReady = false;
-    // move hero out of canvas
-    shipX = -600;
-    shipY = -600;
-    document.getElementById("loseSound").play();
-    pause();
-  }
-  //   satellite 3
-  if (
-    shipX <= sat3X + 50 &&
-    shipX + 50 >= sat3X &&
-    shipY <= sat3Y + 50 &&
-    shipY + 50 >= sat3Y
-  ) {
-    finished = true;
-    time = 0;
-    // hide monster and hero
-    metReady = false;
-    aliReady = false;
-    satReady = false;
-    met2Ready = false;
-    ali2Ready = false;
-    sat2Ready = false;
-    met3Ready = false;
-    ali3Ready = false;
-    sat3Ready = false;
-    met4Ready = false;
-    ali4Ready = false;
-    sat4Ready = false;
-    shipReady = false;
-    // move hero out of canvas
-    shipX = -600;
-    shipY = -600;
-    document.getElementById("loseSound").play();
-    pause();
-  }
-  //   satellite 4
-  if (
-    shipX <= sat4X + 50 &&
-    shipX + 50 >= sat4X &&
-    shipY <= sat4Y + 50 &&
-    shipY + 50 >= sat4Y
-  ) {
-    finished = true;
-    time = 0;
-    // hide monster and hero
-    metReady = false;
-    aliReady = false;
-    satReady = false;
-    met2Ready = false;
-    ali2Ready = false;
-    sat2Ready = false;
-    met3Ready = false;
-    ali3Ready = false;
-    sat3Ready = false;
-    met4Ready = false;
-    ali4Ready = false;
-    sat4Ready = false;
-    shipReady = false;
-    // move hero out of canvas
-    shipX = -600;
-    shipY = -600;
-    document.getElementById("loseSound").play();
-    pause();
-  }
+  // end of function update
 };
 
 function gameOver() {
+  gameEnded = true;
   ctx.fillStyle = "white";
   ctx.font = "30px Verdana";
   ctx.fillText("Game Over", 260, 400);
@@ -670,9 +814,6 @@ function gameOver() {
  * This function, render, runs as often as possible.
  */
 
-let time = 60;
-document.getElementById("time").innerHTML = time;
-let finished = false;
 let timer = function () {
   time -= 1;
   if (time <= 0) {
@@ -756,6 +897,9 @@ var render = function () {
   if (sat4Ready) {
     ctx.drawImage(sat4Image, sat4X, sat4Y);
   }
+  if (shieldReady) {
+    ctx.drawImage(shieldImage, shipX - 5, shipY - 5);
+  }
 
   if (finished == true) {
     gameOver();
@@ -772,7 +916,7 @@ var main = function () {
   render();
   // Request to do this again ASAP. This is a special method
   // for web browsers.
-  requestAnimationFrame(main);
+  loop = requestAnimationFrame(main);
 };
 
 function startGame() {
@@ -787,6 +931,7 @@ function startGame() {
 
 function resetGame() {
   score = 0;
+  cancelAnimationFrame(loop);
   document.getElementById("score").innerHTML = score;
 
   shipX = canvas.width / 2;
@@ -835,6 +980,7 @@ function resetGame() {
   time = 60;
   document.getElementById("time").innerHTML = time;
   finished = false;
+  gameEnded = false;
   loadImages();
   setupKeyboardListeners();
   main();
