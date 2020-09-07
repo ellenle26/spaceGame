@@ -992,4 +992,6 @@ function play() {
 }
 function pause() {
   document.getElementById("bgMusic").pause();
+  document.getElementById("pointSound").pause();
+  document.getElementById("loseSound").pause();
 }
