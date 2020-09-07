@@ -9,7 +9,6 @@ Here, we create and add our "canvas" to the page.
 We also load all of our images. 
 */
 
-
 let canvas;
 let ctx;
 
@@ -378,6 +377,7 @@ let update = function () {
     metY = -50;
     score += 1;
     document.getElementById("score").innerHTML = score;
+    document.getElementById("pointSound").play();
   }
 
   //   left to right
@@ -392,6 +392,7 @@ let update = function () {
     met2X = -50;
     score += 2;
     document.getElementById("score").innerHTML = score;
+    document.getElementById("pointSound").play();
   }
 
   //   right to left
@@ -406,6 +407,7 @@ let update = function () {
     met3X = 50 + canvas.width;
     score += 3;
     document.getElementById("score").innerHTML = score;
+    document.getElementById("pointSound").play();
   }
   //   bttm to top
   if (
@@ -419,9 +421,10 @@ let update = function () {
     met4Y = 50 + canvas.height;
     score += 4;
     document.getElementById("score").innerHTML = score;
+    document.getElementById("pointSound").play();
   }
 
-  //   if ship collide meteor
+  //   if ship collide object
   //   alien 1
   if (
     shipX <= aliX + 50 &&
@@ -448,6 +451,7 @@ let update = function () {
     // move hero out of canvas
     shipX = -600;
     shipY = -600;
+    document.getElementById("loseSound").play();
     pause();
   }
   //   alien 2
@@ -476,6 +480,7 @@ let update = function () {
     // move hero out of canvas
     shipX = -600;
     shipY = -600;
+    document.getElementById("loseSound").play();
     pause();
   }
   //   alien 3
@@ -504,6 +509,7 @@ let update = function () {
     // move hero out of canvas
     shipX = -600;
     shipY = -600;
+    document.getElementById("loseSound").play();
     pause();
   }
   //   alien 4
@@ -532,6 +538,7 @@ let update = function () {
     // move hero out of canvas
     shipX = -600;
     shipY = -600;
+    document.getElementById("loseSound").play();
     pause();
   }
   //   satellite 1
@@ -560,6 +567,7 @@ let update = function () {
     // move hero out of canvas
     shipX = -600;
     shipY = -600;
+    document.getElementById("loseSound").play();
     pause();
   }
   //   satellite 2
@@ -588,6 +596,7 @@ let update = function () {
     // move hero out of canvas
     shipX = -600;
     shipY = -600;
+    document.getElementById("loseSound").play();
     pause();
   }
   //   satellite 3
@@ -616,6 +625,7 @@ let update = function () {
     // move hero out of canvas
     shipX = -600;
     shipY = -600;
+    document.getElementById("loseSound").play();
     pause();
   }
   //   satellite 4
@@ -644,6 +654,7 @@ let update = function () {
     // move hero out of canvas
     shipX = -600;
     shipY = -600;
+    document.getElementById("loseSound").play();
     pause();
   }
 };
